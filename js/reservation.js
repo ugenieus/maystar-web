@@ -40,7 +40,7 @@ function changeGrade(value) {
 				$.each(seat, function(label, seatNumbers) {
 					$.each(seatNumbers, function(idx, seatNumber) {
 						options.push({
-							'label': label + ': ' + seatNumber,
+							'label': label + ' 구역, ' + seatNumber + ' 번 좌석',
 							'value': label + ':' + seatNumber
 						});
 					});
@@ -76,10 +76,13 @@ function changeGrade(value) {
 				}
 
 				$.each(seat, function(idx, obj) {
-					options.push({
-						'label': obj.region + '(' + obj.currentNumber + '/' + obj.maxNumber + ')',
-						'value': obj.region
-					});
+					var remainSeat = obj.maxNumber - obj.currentNumber;
+					if (num <= remainSeat) {
+						options.push({
+							'label': obj.region + ' (남은 좌석 수: ' + remainSeat + '/' + obj.maxNumber + ')',
+							'value': obj.region
+						});
+					}
 				});
 
 				select_area[0].addOption(options);
@@ -102,7 +105,7 @@ function submit(event) {
 	var grade = select_grade.getValue();
 
 	if (!num) {
-		alert('인원 수를 선택해주세요.');
+		alert('관람 수를 선택해주세요.');
 		return;
 	}
 	if (!grade) {
@@ -186,6 +189,12 @@ function submit(event) {
 		parameter: params,
 		success: function(data) {
 			console.log(data);
+			var jsonData = $.parseJSON(data);
+			if (jsonData.result && jsonData.result.success) {
+				window.location = './success.html?name=' + name + '&address=' + address + '&mobile_phone=' + mobile_phone + '&grade=' + grade + '&num=' + num;
+			} else {
+				alert('에러가 발생하였습니다.\n(' + jsonData.code + ') ' + jsonData.message);
+			}
 		}
 	});
 }
