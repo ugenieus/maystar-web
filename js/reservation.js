@@ -11,33 +11,23 @@ function requestAPI(params) {
 }
 
 function changeNumber(value) {
-	var divs = '';
-
 	num = value;
-
-	for (var i = 0; i < value; i++) {
-		divs +=	'	<p>' + (i+1) + ' 번째</p>' +
-				'	<div class="controls">' +
-				'		<select name="grade" num="' + i +'" class="select" placeholder="좌석 등급"></select>' +
-				'	</div>' +
-				'	<div class="controls">' +
-				'		<select name="area" num="' + i +'" class="select" placeholder="구역 및 좌석번호"></select>' +
-				'	</div>';
-	}
-	$('#seat_select').html(divs);
-	seatSelectizeSetting();
+	select_grade.clear();
+	select_grade.enable();
 }
 
-function changeGrade(event) {
-	var index, value;
-
-	index = $(this).attr('num');
-	value = select_grade[index].getValue();
-
-	select_area[index].disable();
-	select_area[index].clearOptions();
-
+function changeGrade(value) {
 	if (value == 'VIP') {
+		var divs = '';
+		for (var i = 1; i <= num; i++) {
+			divs +=	'	<p>' + i + ' 번째</p>' +
+					'	<div class="controls">' +
+					'		<select name="area" class="select" placeholder="구역 및 좌석번호"></select>' +
+					'	</div>';
+		}
+		$('#seat_select').html(divs);
+		seatSelectizeSetting(num);
+
 		requestAPI({
 			parameter: {
 				cmd: 'getVipZone'
@@ -45,20 +35,31 @@ function changeGrade(event) {
 			success: function(data) {
 				var jsonData = $.parseJSON(data);				
 				var seat = jsonData.result.seat;
+				var options = new Array();
 
 				$.each(seat, function(label, seatNumbers) {
 					$.each(seatNumbers, function(idx, seatNumber) {
-						select_area[index].addOption({
+						options.push({
 							'label': label + ': ' + seatNumber,
 							'value': label + ':' + seatNumber
 						});
 					});
 				});
-				select_area[index].refreshOptions();
-				select_area[index].enable();
+				for (var i = 0; i < num; i++) {
+					select_area[i].addOption(options);
+					select_area[i].refreshOptions();
+					select_area[i].enable();
+				};
 			}
 		});
-	} else {
+	} else if (value == 'R' || value == 'S') {
+		var divs;
+		divs =	'	<div class="controls">' +
+				'		<select name="area" class="select" placeholder="구역 및 좌석번호"></select>' +
+				'	</div>';
+		$('#seat_select').html(divs);
+		seatSelectizeSetting(1);
+
 		requestAPI({
 			parameter: {
 				cmd: 'getZone'
@@ -66,6 +67,7 @@ function changeGrade(event) {
 			success: function(data) {
 				var jsonData = $.parseJSON(data);				
 				var seat;
+				var options = new Array();
 
 				if (value == 'R') {
 					seat = jsonData.result.reservation.R;
@@ -74,51 +76,93 @@ function changeGrade(event) {
 				}
 
 				$.each(seat, function(idx, obj) {
-					select_area[index].addOption({
+					options.push({
 						'label': obj.region + '(' + obj.currentNumber + '/' + obj.maxNumber + ')',
 						'value': obj.region
 					});
 				});
-				
-				select_area[index].refreshOptions();
-				select_area[index].enable();
+
+				select_area[0].addOption(options);
+				select_area[0].refreshOptions();
+				select_area[0].enable();
 			}
 		});
+	} else {
+		var divs;
+		divs =	'	<div class="controls">' +
+				'		<select name="area" class="select" placeholder="구역 및 좌석번호"></select>' +
+				'	</div>';
+		$('#seat_select').html(divs);
+		seatSelectizeSetting(1);
 	}
-}
-
-function changeArea(event) {
-
 }
 
 function submit(event) {
 	var VIPs = {}, Rs = {}, Ss = {};
+	var grade = select_grade.getValue();
 
-	for (var i = 0; i < num; i++) {
-		var grade = select_grade[i].getValue();
-		var area = select_area[i].getValue();
-
-		if (grade == 'VIP') {
+	if (!num) {
+		alert('인원 수를 선택해주세요.');
+		return;
+	}
+	if (!grade) {
+		alert('좌석 등급을 선택해주세요.');
+		return;
+	}
+	if (grade == 'VIP') {
+		for (var i = 0; i < num; i++) {
+			var area = select_area[i].getValue();
 			var parts = area.split(':');
 			var area = parts[0];
 			var seatNum = parts[1];
+
+			if (!area) {
+				alert('좌석을 모두 선택해주세요.');
+				return;
+			}
 
 			if (!VIPs[area]) {
 				VIPs[area] = new Array;
 			}
 			VIPs[area].push(seatNum);
-		} else if (grade == 'R') {
-			if (!Rs[area]) {
-				Rs[area] = 0;
-			}
-			Rs[area]++;
-		} else if (grade == 'S') {
-			if (!Ss[area]) {
-				Ss[area] = 0;
-			}
-			Ss[area]++;
 		}
-	};
+	} else if (grade == 'R') {
+		var area = select_area[0].getValue();
+		if (!area) {
+			alert('구역을 선택해주세요.');
+			return;
+		}
+		Rs[area] = num;
+	} else if (grade == 'S') {
+		var area = select_area[0].getValue();
+		if (!area) {
+			alert('구역을 선택해주세요.');
+			return;
+		}
+		Ss[area] = num;
+	}
+
+	var name, address, mobile_phone, phone, email, receipt;
+
+	name = $('#name').val();
+	address = $('#address').val();
+	mobile_phone = $('#mobile_phone').val();
+	phone = $('#phone').val();
+	email = $('#email').val();
+	receipt = $('#receipt').is(":checked");
+
+	if (!name) {
+		alert('이름을 입력해주세요.');
+		return;
+	}
+	if (!address) {
+		alert('티켓을 수령할 주소를 입력해주세요.');
+		return;
+	}
+	if (!name) {
+		alert('휴대폰 번호를 입력해주세요.');
+		return;
+	}
 
 	var seat = {
 		'VIP': VIPs,
@@ -127,12 +171,12 @@ function submit(event) {
 	};
 	var params = {
 		cmd: 'setUser',
-		name: $('#name').val(),
-		address: $('#address').val(),
-		mobile_phone: $('#mobile_phone').val(),
-		phone: $('#phone').val(),
-		email: $('#email').val(),
-		receipt: $('#receipt').is(":checked"),
+		name: name,
+		address: address,
+		mobile_phone: mobile_phone,
+		phone: phone,
+		email: email,
+		receipt: receipt,
 		seat: JSON.stringify(seat)
 	}
 
@@ -146,22 +190,7 @@ function submit(event) {
 	});
 }
 
-function seatSelectizeSetting() {
-	$select_grade = $('select[name=grade]').selectize({
-		create: false,
-		labelField: 'label',
-		valueField: 'value',
-		options: [
-			{label: 'VIP석 200,000원', value: 'VIP'},
-			{label: 'R석 100,000원', value: 'R'},
-			{label: 'S석 70,000원', value: 'S'}
-		]
-	});
-
-	for (var i = 0; i < $select_grade.length; i++) {
-		$select_grade[i]
-	};
-
+function seatSelectizeSetting(n) {
 	$select_area = $('select[name=area]').selectize({
 		create: false,
 		sortField: 'text',
@@ -169,10 +198,7 @@ function seatSelectizeSetting() {
 		valueField: 'value'
 	});
 
-	for (var i = 0; i < num; i++) {
-		$select_grade.change(changeGrade);
-		$select_area.change(changeArea);
-		select_grade[i] = $select_grade[i].selectize;
+	for (var i = 0; i < n; i++) {
 		select_area[i] = $select_area[i].selectize;
 		select_area[i].disable();
 	};
@@ -188,7 +214,6 @@ function initialize(jQuery) {
 		onChange: changeNumber
 	});
 	select_number = $select_number[0].selectize;
-
 	for (var i = 1; i <= 49; i++) {
 		select_number.addOption({
 			'label': i + ' 명',
@@ -197,7 +222,21 @@ function initialize(jQuery) {
 	}
 	select_number.refreshOptions();
 
-	select_grade = new Array();
+	// grade selectize setting
+	$select_grade = $('select[name=grade]').selectize({
+		create: false,
+		labelField: 'label',
+		valueField: 'value',
+		options: [
+			{label: 'VIP석 200,000원', value: 'VIP'},
+			{label: 'R석 100,000원', value: 'R'},
+			{label: 'S석 70,000원', value: 'S'}
+		],
+		onChange: changeGrade
+	});
+	select_grade = $select_grade[0].selectize;
+	select_grade.disable();
+
 	select_area = new Array();
 
 	// add event listener
