@@ -33,7 +33,7 @@ function changeGrade(value) {
 				cmd: 'getVipZone'
 			},
 			success: function(data) {
-				var jsonData = $.parseJSON(data);				
+				var jsonData = $.parseJSON(data);
 				var seat = jsonData.result.seat;
 				var options = new Array();
 
