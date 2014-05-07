@@ -13,13 +13,12 @@
 	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
 	<script src="bootstrap-3.1.1/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/selectize.min.js"></script>
-	<script src="js/reservation.js" type="text/javascript"></script>	
+	<script src="js/reservation.js" type="text/javascript"></script>
+	<script src="js/es5-shim.min.js" type="text/javascript"></script>	
+	<!--[if lt IE 9]><script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script><![endif]-->
 </head>
 <body>
-	<div class="container">
-		<div class="row clearfix">
-			<div class="col-md-12 column">
-				<div class="jumbotron">
+<div class="jumbotron">
 					<h1>
 						<span>5월의 별 헤는 밤</span> <span class="span1">관람신청</span>
 					</h1>
@@ -28,7 +27,11 @@
 						본 공연의 후원금은 기부금으로 처리되어 연세발전기금으로 적립되어 사용됩니다.
 					</p>
 				</div>
-			</div>
+	<div class="container">
+		<div class="row clearfix">
+			
+				
+			
 			<div class="col-md-12 column">
 				<div id="seatinfo">
 					<img alt="좌석배치도" src="./images/allseat.png">
