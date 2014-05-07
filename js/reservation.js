@@ -39,9 +39,18 @@ function changeGrade(value) {
 
 				$.each(seat, function(label, seatNumbers) {
 					$.each(seatNumbers, function(idx, seatNumber) {
+						var sortValue;
+						if (seatNumber < 10) {
+							sortValue = '00' + seatNumber;
+						} else if (seatNumber < 100) {
+							sortValue = '0' + seatNumber;
+						} else {
+							sortValue = '' + seatNumber;
+						}
 						options.push({
 							'label': label + ' 구역, ' + seatNumber + ' 번 좌석',
-							'value': label + ':' + seatNumber
+							'value': label + ':' + seatNumber,
+							'sortValue': label + ':' + sortValue
 						});
 					});
 				});
@@ -80,7 +89,8 @@ function changeGrade(value) {
 					if (num <= remainSeat) {
 						options.push({
 							'label': obj.region + ' (남은 좌석 수: ' + remainSeat + '/' + obj.maxNumber + ')',
-							'value': obj.region
+							'value': obj.region,
+							'sortValue': obj.region
 						});
 					}
 				});
@@ -118,6 +128,7 @@ function submit(event) {
 			var parts = area.split(':');
 			var area = parts[0];
 			var seatNum = parts[1];
+			var flag = false;
 
 			if (!area) {
 				alert('좌석을 모두 선택해주세요.');
@@ -126,6 +137,15 @@ function submit(event) {
 
 			if (!VIPs[area]) {
 				VIPs[area] = new Array;
+			}
+			$.each(VIPs[area], function(index, val) {
+				 if (val == seatNum) {
+				 	flag = true;
+				 }
+			});
+			if (flag) {
+				alert('중복으로 선택된 좌석이 있습니다. 좌석을 확인해주세요.');
+				return;
 			}
 			VIPs[area].push(seatNum);
 		}
@@ -202,7 +222,7 @@ function submit(event) {
 function seatSelectizeSetting(n) {
 	$select_area = $('select[name=area]').selectize({
 		create: false,
-		sortField: 'text',
+		sortField: 'sortValue',
 		labelField: 'label',
 		valueField: 'value'
 	});
@@ -219,6 +239,7 @@ function initialize(jQuery) {
 		create: false,
 		labelField: 'label',
 		valueField: 'value',
+		sortField: 'value',
 		options: [ ],
 		onChange: changeNumber
 	});
