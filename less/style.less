@@ -1,5 +1,28 @@
 @reservation-pointcolor: #2980b9;
+@light-yellow: #fffc9c;
 
+.jumbotron {
+	h1 {
+		text-align: center;
+	}
+	p {
+		text-align: right;
+		color: rgba(255, 255, 255, 0.8);
+	}
+	
+	background-image: url(../images/bg_header.jpeg);
+	
+	 
+	 background-position: 50% 50%;
+	 background-size: cover;
+	 box-sizing: border-box;
+	 clear: both;
+	 display: block;
+	 padding: 5em;
+	 img {
+	 	width: 100%;
+	 }
+}
 #reservation-btn-area {
 	.reservation-btn {
 		backbround-color:#aaa;
@@ -14,11 +37,11 @@
 	color: @reservation-pointcolor;
 }
 h1>span {
-	color:@reservation-pointcolor;
+	color:white;
 	font-weight:bold;
 }
 .span1 {
-	color: #333;
+	color: @light-yellow;
 	font-size: 0.5em;
 }
 .rightbutton-area {
@@ -47,7 +70,8 @@ h1>span {
 #footer {
 	margin: 1em 0 0;
 	background-color: #333;
-	height: 5em;
+	padding: 2em;
+	
 	
 	text-align: center;
 	p {
