@@ -1,3 +1,28 @@
+@reservation-pointcolor: #2980b9;
+@light-yellow: #fffc9c;
+
+.jumbotron {
+	h1 {
+		text-align: center;
+	}
+	p {
+		text-align: right;
+		color: rgba(255, 255, 255, 0.8);
+	}
+	
+	background-image: url(../images/bg_header.jpeg);
+	
+	 
+	 background-position: 50% 50%;
+	 background-size: cover;
+	 box-sizing: border-box;
+	 clear: both;
+	 display: block;
+	 padding: 5em;
+	 img {
+	 	width: 100%;
+	 }
+}
 #reservation-btn-area {
 	.reservation-btn {
 		backbround-color:#aaa;
@@ -6,5 +31,51 @@
 #seatinfo {
 	img {
 		width: 100%;
+	}
+}
+.required {
+	color: @reservation-pointcolor;
+}
+h1>span {
+	color:white;
+	font-weight:bold;
+}
+.span1 {
+	color: @light-yellow;
+	font-size: 0.5em;
+}
+.rightbutton-area {
+	.reservation-info {
+		padding: 1em;
+		margin: 0 0 1em;
+		text-align:center;
+		background-color: #fdfdfd;
+		border-radius: 5px;
+		border:1px solid #ddd;
+		p {
+
+			strong {
+			color: @reservation-pointcolor;
+				font-size: 1.5em;
+			}
+		
+	}
+}
+	button {
+		float:right;
+	}
+	
+}
+
+#footer {
+	margin: 1em 0 0;
+	background-color: #333;
+	padding: 2em;
+	
+	
+	text-align: center;
+	p {
+		vertical-align: center;
+		color: #eee;
 	}
 }
