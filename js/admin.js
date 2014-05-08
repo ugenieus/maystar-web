@@ -1,4 +1,4 @@
-var BASE_URL = "http://maystar20140531.cafe24.com/html/maystar/api/api.php"
+var BASE_URL = "http://maystar20140531.cafe24.com/api/api.php"
 
 var userArray;
 

@@ -1,4 +1,4 @@
-var BASE_URL = "http://maystar20140531.cafe24.com/html/maystar/api/api.php"
+var BASE_URL = "http://maystar20140531.cafe24.com/api/api.php"
 
 var AREA_R = ['A3', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6',]
 
