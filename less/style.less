@@ -33,7 +33,6 @@ body {
       font-size: 0.5em;
     }
   }
-
   p {
     font-size: 1.5em;
     text-align: right;
@@ -44,6 +43,11 @@ body {
     width: 100%;
   }
 }
+.header-success {
+  padding: 4em 1em;
+border-bottom: 1px solid #eee;
+}
+
 #reservation-btn-area {
   .reservation-btn {
     backbround-color:#aaa;
@@ -58,36 +62,34 @@ body {
   color: @reservation-pointcolor;
 }
 
+.reservation-info {
+  padding: 1em;
+  margin: 0 0 1em;
+  text-align: center;
+  background-color: white;
+  background-color: rgba(253, 253, 253, 0.97);
 
-.rightbutton-area {
-  .reservation-info {
-    padding: 1em;
-    margin: 0 0 1em;
-    text-align:center;
-    background-color: #fdfdfd;
-    border-radius: 5px;
-    border:1px solid #ddd;
-    p {
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  p {
 
-      strong {
-        color: @reservation-pointcolor;
-        font-size: 1.5em;
-      }
-
+    strong {
+      color: @reservation-pointcolor;
+      font-size: 1.5em;
     }
-  }
-  button {
-    float:right;
-  }
 
+  }
 }
+button {
+  float:right;
+}
+
+
 
 #footer {
   margin: 1em 0 0;
   background-color: #7F8D94;
   padding: 2em;
-
-
   text-align: center;
   p {
     vertical-align: center;
@@ -98,4 +100,22 @@ body {
 .btn {
   border: 1px solid #white !important;
 
+}
+
+.success {
+  background-color: #fff;
+
+    margin:3em 0;
+
+}
+.success h1 {
+  color:@text-dark;
+}
+
+
+.reservation-personinfo {
+  padding: 5em 0;
+}
+.thanks {
+  text-align: center;
 }
