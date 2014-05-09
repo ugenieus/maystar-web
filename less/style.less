@@ -14,13 +14,14 @@ body {
   box-sizing: border-box;
   clear: both;
   display: block;
-  padding: 1.9em 1em;
+  padding: 2em 0.5em;
 
   h1 {
     text-align: center;
     font-size:2.5em;
     margin:0 0 0.5em 0;
     &>span {
+      color: white;
       color: rgba(255, 255, 255, 0.9);
       font-weight:bold;
     }
@@ -33,6 +34,7 @@ body {
     font-size: 1em;
     text-align: right;
     color: @light-yellow;
+    margin: 0;
   }
 
   img {
@@ -119,10 +121,12 @@ button {
   .header {
     padding: 4em 1em;
     h1 {
-      font-size: 5em;
+      font-size: 4em;
+
     }
     p {
       font-size: 1.5em;
+      line-height: initial;
     }
   }
 }
