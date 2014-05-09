@@ -92,6 +92,22 @@ button {
     vertical-align: center;
     color: #eee;
   }
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .btn{
+    border: 1px solid white;
+    border: 1px solid rgba(255,255,255,0.4);
+    margin: 1em 0 0em 0;
+
+    &:hover {
+      color:#ddd;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+  }
 }
 
 .success {
@@ -108,7 +124,7 @@ button {
   text-align: center;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .header {
     padding: 4em 1em;
     h1 {
@@ -117,6 +133,17 @@ button {
     p {
       font-size: 1.5em;
       line-height: initial;
+    }
+  }
+  #footer {
+    img {
+      display: inline-block;
+      margin: 0 0 0em 0;
+    }
+    .btn {
+
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      margin: 0 0 0em 2em;
     }
   }
 }
