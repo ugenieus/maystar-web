@@ -1,14 +1,10 @@
 @reservation-pointcolor: #6798B9;
 @light-yellow: #fffc9c;
-@body-color:#DCE3E5;
+@body-color:#EDF3F5;
 @text-dark:#334F5E;
 @text-nomal: #809196;
 body {
   background-color: @body-color !important;
-
-  p{
-
-  }
 }
 .header {
   text-shadow:0 1px 10px rgba(0,0,0,0.9);
@@ -18,11 +14,11 @@ body {
   box-sizing: border-box;
   clear: both;
   display: block;
-  padding: 4em 1em;
+  padding: 2em 1em;
 
   h1 {
     text-align: center;
-    font-size: 5em;
+    font-size:2.5em;
     margin:0 0 0.5em 0;
     &>span {
       color: rgba(255, 255, 255, 0.9);
@@ -34,7 +30,7 @@ body {
     }
   }
   p {
-    font-size: 1.5em;
+    font-size: 1em;
     text-align: right;
     color: @light-yellow;
   }
@@ -116,4 +112,16 @@ button {
 }
 .thanks {
   text-align: center;
+}
+
+@media (min-width: 992px) {
+  .header {
+    padding: 4em 1em;
+    h1 {
+      font-size: 5em;
+    }
+    p {
+      font-size: 1.5em;
+    }
+  }
 }
